@@ -7,14 +7,15 @@ import time
 
 NUM_OF_QUESTIONS = 20
 NAME_OF_FILE = "Pitt Nemesis Pact (Responses) - Form Responses 1.csv"
-
+L_OR_H = -998 #positive 988 for good matches. make sure to change to min(row)
+L_OR_H2 = -999 #positive 999 for good matches.
 def algorithm():   
     # Importing 
     df = pd.read_csv(NAME_OF_FILE, sep=",")
     del df["Timestamp"]
     del df["Email Address"]
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))
-    
+    df = df.sample(frac = 1)
     names = df["What is your full name?"].values
     #Names contains all the names
     #look at first person's questions. Compare person 1's question 1 to everyone elses question 1. 
@@ -49,7 +50,7 @@ def algorithm():
 
         #print()
         #print(f'{i}: {person["What is your full name?"]}')
-    print("\n"*100)
+    print("\n"*15)
     # print("2D Array Containing Total Differences Between People")
     # counter = 0
     # for row in difference:
@@ -67,15 +68,21 @@ def algorithm():
     #     indices = [index for index, item in enumerate(row) if item == maxnum]
     #     print(maxnum, " ", indices)
     # print()
+  
     return difference, questionDifferenceCount, names
     
 
 def match(difference, questionDifferenceCount, names):
+    for i in range(len(difference)):
+        difference[i][i] = L_OR_H
+    
     currentPerson = 0 
     for row in difference:
-        time.sleep(0.5)
-        if(row[currentPerson] != -999): #tests if person we are looking at is already marked.
+        time.sleep(0.1)
+        
+        if(row[currentPerson] != L_OR_H2): #tests if person we are looking at is already marked.
             maxnum = max(row)
+            #maxnum = min(row)
             indices = [index for index, item in enumerate(row) if item == maxnum] #finds the indices of the max people
             matchNum = random.choice(indices)  #chooses one of the max people if there is tie
             print(names[currentPerson].upper(), "matches to", names[matchNum].upper())
@@ -83,8 +90,8 @@ def match(difference, questionDifferenceCount, names):
             print("Number of questions answered differently:", questionDifferenceCount[matchNum][currentPerson])
             print()
             for i in range(len(names)): #marks matched people
-                difference[i][currentPerson] = -999
-                difference[i][matchNum] = -999 
+                difference[i][currentPerson] = L_OR_H2
+                difference[i][matchNum] = L_OR_H2
         #print(difference)
         #print(names)
         currentPerson += 1
