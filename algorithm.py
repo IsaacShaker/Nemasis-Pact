@@ -2,11 +2,14 @@ import pandas as pd
 import random
 import numpy as np
 from tabulate import tabulate
+import itertools
+
 NUM_OF_QUESTIONS = 20
+NAME_OF_FILE = "Pitt Nemesis Pact (Responses) - Form Responses 1.csv"
 
 def algorithm():   
     # Importing 
-    df = pd.read_csv("Pitt Nemesis Pact (Responses) - Form Responses 1.csv", sep=",")
+    df = pd.read_csv(NAME_OF_FILE, sep=",")
     del df["Timestamp"]
     del df["Email Address"]
     print(tabulate(df, headers='keys', tablefmt='fancy_grid'))
@@ -58,19 +61,49 @@ def algorithm():
         print(row, " ", names[counter])
         counter += 1
     
-
-    
-
-
     for row in difference:
         maxnum = max(row)
         indices = [index for index, item in enumerate(row) if item == maxnum]
         print(maxnum, " ", indices)
-    
+    print()
+    return difference, questionDifferenceCount, names
     
 
+def match(difference, questionDifferenceCount, names):
+    currentPerson = 0 
+    for row in difference:
+        if(row[currentPerson] != -999): #tests if person we are looking at is already marked.
+            maxnum = max(row)
+            indices = [index for index, item in enumerate(row) if item == maxnum] #finds the indices of the max people
+            matchNum = random.choice(indices)  #chooses one of the max people if there is tie
+            print(names[currentPerson], "matches to", names[matchNum], "with difference value:", maxnum) #prints out match
+            print("Number of questions answered differently:", questionDifferenceCount[matchNum][currentPerson])
+            print()
+            for i in range(len(names)): #marks matched people
+                difference[i][currentPerson] = -999
+                difference[i][matchNum] = -999 
+        #print(difference)
+        #print(names)
+        currentPerson += 1
+    print("done!")
+
+def complexMatch(difference,questionDifference,names):
+    temp = itertools.combinations(names,2)
+    combinations = np.array(list(temp))
+    print(combinations)
+    firstElement = combinations[0][0]
+    rows = 0
+    for element in combinations:
+        if element[0] != firstElement:
+            break
+        rows += 1
+    # names1 = names.copy(order='C')
+    # names2 = names.copy(order='C')
+    # np.cross(names1, names2, axisa=-1, axisb=-1, axisc=-1, axis=None)
+
 def main():
-    algorithm()
+    difference, questionDifferenceCount, names = algorithm()
+    match(difference, questionDifferenceCount, names)
 
 if __name__ == "__main__":
     main()
