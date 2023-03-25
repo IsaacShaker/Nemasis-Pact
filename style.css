@@ -2,7 +2,7 @@
 url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
 body {
 	margin: 0;
-	background: whitesmoke;
+	background: beige;
 	font-family: 'Work Sans', sans-serif;
 	font-weight: 800;
 }
@@ -10,6 +10,7 @@ body {
 .container {
 	width: 80%;
 	margin: 0 auto;
+  text-align: right;
 }
 
 header {
@@ -33,7 +34,6 @@ button {
 }
 
 
-.button1 {background-color: #4CAF50;} 
 
 .logo {
   float: left;
