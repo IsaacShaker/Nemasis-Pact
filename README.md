@@ -1,2 +1,4 @@
 # Nemesis-Pact
-Expand people's mindset!
+Recently, due to the increased use of social media, people have been pushed to those they agree with. This has led to polarization among the population, wherein people are resistant to interacting with those who disagree with them. This can pose a real problem, especially because our world today is full of diverse perspectives. It is essential for people to meet others with differing points of views in order to expand their horizons. 
+
+To solve this issue, we created NemesisPact! Users fill out a survey and are matched with the person they are least alike to. Once matched, they engage in conversation in order to learn more about the other person, what their views are, what has affected their views, and learn more about the numerous perspectives throughout the world!
